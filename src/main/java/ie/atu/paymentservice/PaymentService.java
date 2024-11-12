@@ -21,12 +21,12 @@ public class PaymentService {
         paymentDetails.setPaymentStatus("pending");
         return paymentRepository.save(paymentDetails);
     }
-    public Optional<PaymentDetails> getPaymentDetails(Long bookingId) {
+    public Optional<PaymentDetails> getPaymentStatus(Long bookingId) {
         return paymentRepository.findById(bookingId);
     }
 
     public PaymentDetails confirmPayment(Long bookingId) {
-        Optional<PaymentDetails> paymentDetails = getPaymentDetails(bookingId);
+        Optional<PaymentDetails> paymentDetails = paymentRepository.findById(bookingId);
         if (paymentDetails.isPresent()) {
             PaymentDetails paymentDetail = paymentDetails.get();
             paymentDetail.setPaymentStatus("confirmed");
