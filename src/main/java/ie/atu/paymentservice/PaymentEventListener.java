@@ -1,21 +1,15 @@
 package ie.atu.paymentservice;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class PaymentEventListener {
 
-    private final PaymentService paymentService;
-
-    public PaymentEventListener(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
-
     @RabbitListener(queues = "${rabbitmq.queue}")
-    public void handleBookingCreatedEvent(BookingDetailsDTO bookingDetails) {
-        // Create a payment based on the received booking details
-        paymentService.createPayment(Long.valueOf(bookingDetails.getId()), bookingDetails.getAmount());
+    public void handleBookingCreatedEvent(BookingDetailsDTO bookingDetailsDTO) {
+        // Handle the received BookingDetailsDTO
+        System.out.println("Received BookingDetailsDTO: " + bookingDetailsDTO);
+        // Process the booking details as needed
     }
-
 }
