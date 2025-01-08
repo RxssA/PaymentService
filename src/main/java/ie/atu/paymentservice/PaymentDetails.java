@@ -9,8 +9,8 @@ public class PaymentDetails {
     @Id
     private String id; // Payment ID
     private String bookingId; // Booking ID
-    private double amount;    // Payment amount
-    private String paymentStatus; // Status of the payment
+    private double amount;    // Existing field
+    private String paymentStatus; // Existing field
 
     // Getters and setters
     public String getId() {
