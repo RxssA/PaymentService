@@ -1,33 +1,31 @@
 package ie.atu.paymentservice;
 
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Payment")
+@Document(collection = "paymentDetails")
 public class PaymentDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private Long bookingId;
-    private double amount;
-    private String paymentStatus;
 
-    public int getId() {
+    @Id
+    private String id; // Payment ID
+    private String bookingId; // Booking ID
+    private double amount;    // Payment amount
+    private String paymentStatus; // Status of the payment
+
+    // Getters and setters
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getBookingId() {
+    public String getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(Long bookingId) {
+    public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
     }
 

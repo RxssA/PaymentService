@@ -8,30 +8,33 @@ import java.util.Optional;
 @Service
 public class PaymentService {
 
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     @Autowired
     public PaymentService(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
+
     public PaymentDetails createPayment(Long bookingId, double amount) {
         PaymentDetails paymentDetails = new PaymentDetails();
-        paymentDetails.setBookingId(bookingId);
+        paymentDetails.setBookingId(bookingId.toString()); // Convert Long to String if necessary
         paymentDetails.setAmount(amount);
         paymentDetails.setPaymentStatus("pending");
         return paymentRepository.save(paymentDetails);
     }
-    public Optional<PaymentDetails> getPaymentStatus(Long bookingId) {
-        return paymentRepository.findById(bookingId);
+
+    public Optional<PaymentDetails> getPaymentStatus(Long paymentId) {
+        return paymentRepository.findById(paymentId.toString()); // Ensure `paymentId` is stored as a String
     }
 
-    public PaymentDetails confirmPayment(Long bookingId) {
-        Optional<PaymentDetails> paymentDetails = paymentRepository.findById(bookingId);
-        if (paymentDetails.isPresent()) {
-            PaymentDetails paymentDetail = paymentDetails.get();
-            paymentDetail.setPaymentStatus("confirmed");
-            return paymentRepository.save(paymentDetail);
+    public PaymentDetails confirmPayment(Long paymentId) {
+        Optional<PaymentDetails> optionalPayment = paymentRepository.findById(paymentId.toString());
+        if (optionalPayment.isPresent()) {
+            PaymentDetails payment = optionalPayment.get();
+            payment.setPaymentStatus("confirmed");
+            return paymentRepository.save(payment);
         }
-        return null;
+        return null; // Return null if payment is not found
     }
+
 }
